@@ -47,11 +47,16 @@ public class ATTOMController : Controller
     {
 
         StreetViewViewModel model = new StreetViewViewModel();
+        var x = _googleStreetViewAPIService.GetStreetView(streetAddress);
+        ViewBag.streetAddress = streetAddress;
+        ViewBag.stateAbbrev = stateAbbrev;
+        ViewBag.cityName = cityName;
 
-        var x = _googleStreetViewAPIService.GetStreetView(address);
+        var address2 = cityName + ", " + stateAbbrev;
+        var house_info = _housing.GetHouseInformation(streetAddress, address2);
 
         model.Address = x;
-        return View(model);
+        return View(Tuple.Create(model, house_info));
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

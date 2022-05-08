@@ -1,10 +1,10 @@
-$(function() {
+$(function () {
     $.ajax({
         type: "GET",
         dataType: "json",
         url: "/api/CityTrends",
-        data: {cityName:$("#cityName").val(),stateAbbrev:$("#stateAbbrev").val()},
-        success: function(data){
+        data: { cityName: $("#cityName").val(), stateAbbrev: $("#stateAbbrev").val() },
+        success: function (data) {
             showChartTrend(data);
             populateTrendChartYearAmount();
         },
@@ -14,19 +14,16 @@ $(function() {
 
 })
 
-function populateTrendChartYearAmount()
-{
+function populateTrendChartYearAmount() {
     var yearSelectorTotal = [];
     counter = 30;
-    for(let i = 0; i <= 30; i++)
-    {
+    for (let i = 0; i <= 30; i++) {
         yearSelectorTotal.push(1985 + counter);
         counter--;
     }
 
     var select = document.getElementById("trendGraphYearSelector");
-    for (let i = 0; i < yearSelectorTotal.length; i++)
-    {   
+    for (let i = 0; i < yearSelectorTotal.length; i++) {
         var option = yearSelectorTotal[i];
         var element = document.createElement("option");
         element.textContent = option;
@@ -41,45 +38,39 @@ function errorOnAjax() {
 }
 
 let graphChart = null;
-function showChartTrend(data, trendSelectorYear){
-    
+function showChartTrend(data, trendSelectorYear) {
+
     document.querySelector('#yearSelector').innerHTML = '';
-    if (isNaN(trendSelectorYear))
-    {
+    if (isNaN(trendSelectorYear)) {
         trendSelectorYear = 2015;
     }
-    
+
     const years = [];
     const crimes = [];
     const propertyCrimes = [];
     const violentCrimes = [];
     const years_list = [];
     const year_removed = (trendSelectorYear - 1985);
-    console.log(year_removed);
 
-    for(let i = 0; i < data.totalTrends.length; i++)
-    {
-        years_list.push(data.totalTrends[i]["year"]);
+    for (let i = 0; i < data.length; i++) {
+        years_list.push(data[i].year);
     }
 
-    data.totalTrends.splice(0, year_removed);
-    data.propertyTrends.splice(0, year_removed);
-    data.violentTrends.splice(0, year_removed);
+    data.splice(0, year_removed);
 
-    for(let i = 0; i < data.totalTrends.length; i++)
-    {
-        years.push(data.totalTrends[i]["year"]);
-        crimes.push(data.totalTrends[i]["totalOffenses"]);
-        propertyCrimes.push(data.propertyTrends[i]["totalOffenses"]);
-        violentCrimes.push(data.violentTrends[i]["totalOffenses"]);
+    for (let i = 0; i < data.length; i++) {
+        years.push(data[i].year);
+        crimes.push(data[i].totalOffenses);
+        propertyCrimes.push(data[i].propertyCrimes);
+        violentCrimes.push(data[i].violentCrimes);
+
     }
 
 
     years_list.reverse();
     var select = document.getElementById("yearSelector");
-    for (let i = 0; i < years_list.length; i++)
-    {
-        
+    for (let i = 0; i < years_list.length; i++) {
+
         var option = years_list[i];
         var element = document.createElement("option");
         element.textContent = option;
@@ -128,7 +119,7 @@ function showChartTrend(data, trendSelectorYear){
                 backgroundColor: 'rgb(236, 0, 0, 0.2)'
 
             }
-        ]
+            ]
 
         },
         options: {
@@ -143,12 +134,11 @@ function showChartTrend(data, trendSelectorYear){
     //Creats the Line Graph
     const ctx = document.getElementById('crimeTrendChart').getContext('2d');
 
-    if (graphChart != null)
-    {
+    if (graphChart != null) {
         graphChart.destroy();
     }
     graphChart = new Chart(ctx, config);
-    
+
     document.getElementById("loadingIconGraph").textContent = "";
-    
+
 }
