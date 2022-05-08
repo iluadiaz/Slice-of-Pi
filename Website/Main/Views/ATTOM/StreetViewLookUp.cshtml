@@ -31,4 +31,36 @@
 @section Scripts {
 <script type="text/javascript" src="~/js/safestStates.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/js/stateAndCityForm.js" asp-append-version="true"></script>
+
 }
+<script>
+    
+    $("input.positive-numeric-only").on("keydown", function(e) {
+       var char = e.originalEvent.key.replace(/[^.^,]/, "");
+       if (char.length == 0 && !(e.originalEvent.ctrlKey || e.originalEvent.metaKey)) {
+         e.preventDefault();
+       }
+     });
+   
+      //prevent bad user input
+     $("input.positive-numeric-only").bind("paste", function(e) {
+       var numbers = e.originalEvent.clipboardData
+         .getData("text")
+         .replace(/[^.^,]/g, "");
+       e.preventDefault();
+       var the_val = parseInt(numbers);
+       if (the_val > 0) {
+         $(this).val(the_val.toFixed(0));
+       }
+     });
+   
+      //prevent bad user input
+     $("input.positive-numeric-only").focusout(function(e) {
+       if (!isNaN(this.value) && this.value.length != 0) {
+         this.value = Math.abs(parseInt(this.value)).toFixed(0);
+       } else {
+         this.value = 0;
+       }
+     });
+     
+</script>

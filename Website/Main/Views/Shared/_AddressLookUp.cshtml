@@ -8,3 +8,36 @@
     <br><br>
     <input id="submit_button" type="submit" value="Submit">
 }
+
+@section Scripts {
+
+function validate() {
+  $("input.positive-numeric-only").on("keydown", function(e) {
+       var char = e.originalEvent.key.replace(/[^0-9^.^,]/, "");
+       if (char.length == 0 && !(e.originalEvent.ctrlKey || e.originalEvent.metaKey)) {
+         e.preventDefault();
+       }
+     });
+   
+      //prevent bad user input
+     $("input.positive-numeric-only").bind("paste", function(e) {
+       var numbers = e.originalEvent.clipboardData
+         .getData("text")
+         .replace(/[^0-9^.^,]/g, "");
+       e.preventDefault();
+       var the_val = parseInt(numbers);
+       if (the_val > 0) {
+         $(this).val(the_val.toFixed(0));
+       }
+     });
+   
+      //prevent bad user input
+     $("input.positive-numeric-only").focusout(function(e) {
+       if (!isNaN(this.value) && this.value.length != 0) {
+         this.value = Math.abs(parseInt(this.value)).toFixed(0);
+       } else {
+         this.value = 0;
+       }
+     });   
+}  
+}

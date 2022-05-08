@@ -43,8 +43,8 @@ public class ATTOMController : Controller
     }
 
     [HttpGet]
-    public IActionResult StreetView(string address)//Need more research as to how I can display the picture. Might be able to just place the url
-    {//in the html and display it that way
+    public IActionResult StreetView(string address)
+    {
 
         StreetViewViewModel model = new StreetViewViewModel();
 
