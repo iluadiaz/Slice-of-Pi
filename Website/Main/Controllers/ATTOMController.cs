@@ -42,8 +42,7 @@ public class ATTOMController : Controller
         return View(data);
     }
 
-    [HttpGet]
-    public IActionResult StreetView(string address)
+    public IActionResult StreetView(string streetAddress, string cityName, string stateAbbrev)
     {
 
         StreetViewViewModel model = new StreetViewViewModel();

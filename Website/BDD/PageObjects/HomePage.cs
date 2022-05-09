@@ -15,6 +15,7 @@ namespace TestBDD.PageObjects
         private IWebElement DropDownList => _browserInteractions.WaitAndReturnElement(By.Id("navbarDropdownMenuLink"));
         private IWebElement DropDown_CityLookUp => _browserInteractions.WaitAndReturnElement(By.Id("CityCrimeLookUpLink"));
         private IWebElement DropDownTextHomeListing => _browserInteractions.WaitAndReturnElement(By.Id("HomeListingsLink"));
+        private IWebElement DropDownStreetView => _browserInteractions.WaitAndReturnElement(By.Id("StreetViewLink"));
 
         public HomePage(IBrowserInteractions browserInteractions)
             : base(browserInteractions)
@@ -31,6 +32,7 @@ namespace TestBDD.PageObjects
 
         public bool GetDropDownText => DropDownText.Displayed;
         public bool GetDropDownTextHomeListingItem => DropDownTextHomeListing.Displayed;
+        public bool GetDropDownStreetViewItem => DropDownStreetView.Displayed;
         public string GetAppleButtonText(int index) => AppleButtons.ElementAt(index).Text;
         public IEnumerable<string> GetAppleButtonTexts() => AppleButtons.Select(x => x.Text);
 
@@ -50,6 +52,11 @@ namespace TestBDD.PageObjects
         public void ClickHomeListingButton()
         {
             var x = DropDownTextHomeListing.FindElement(By.LinkText("HomeListingsLink"));
+            var navigation = x.GetAttribute("href");
+        }
+        public void ClickStreetViewSearch()
+        {
+            var x = DropDownStreetView.FindElement(By.LinkText("StreetViewLink"));
             var navigation = x.GetAttribute("href");
         }
     }

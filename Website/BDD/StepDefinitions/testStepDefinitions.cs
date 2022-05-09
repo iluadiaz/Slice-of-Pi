@@ -44,10 +44,18 @@ namespace TestBDD.StepDefinitions
             navbarDropdownMenuLink.Should().BeTrue();
         }
 
-        [When(@"I click home listings search")]
+        [When(@"I click street view search")]
         public void NavigateToANewPage()
         {
             _HomePage.ClickHomeListingButton();
         }
+
+        [Then(@"I will be directed to streetview lookup")]
+        public void NavigateToStreetViewLookUp()
+        {
+            _HomePage.Goto(Common.StreetViewLookUpPageName);
+
+        }
     }
 }
+
