@@ -57,11 +57,11 @@ namespace Main.DAL.Concrete
                 return model;
             }
 
-            model.StreetAddress = (string)(result["property"][0]["address"]["line1"]);
-            model.City = (string)(result["property"][0]["address"]["locality"]);
-            model.County = (string)(result["property"][0]["area"]["countrySecSubd"]);
-            model.Price = (int)(result["property"][0]["assessment"]["assessed"]["assdTtlValue"]);
-            model.ZipCode = (string)(result["property"][0]["address"]["postal1"]);
+            model.StreetAddress = (string)(result["property"]?[0]?["address"]?["line1"]) ?? "";
+            model.City = (string)(result["property"]?[0]?["address"]?["locality"] ?? "");
+            model.County = (string)(result["property"]?[0]["area"]?["countrySecSubd"]) ?? "";
+            model.Price = (int?)(result["property"]?[0]?["assessment"]?["assessed"]?["assdTtlValue"]) ?? 0;
+            model.ZipCode = (string)(result["property"]?[0]?["address"]?["postal1"]) ?? "";
 
             return model;
             
