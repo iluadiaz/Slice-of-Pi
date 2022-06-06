@@ -1,8 +1,0 @@
-SELECT [Id]
-      ,[UserName]
-      ,[Email]
-      ,[EmailConfirmed]
-      ,[PhoneNumberConfirmed]
-      ,[TwoFactorEnabled]
-      ,[LockoutEnabled]
-  FROM [dbo].[AspNetUsers]
